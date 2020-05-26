@@ -18,12 +18,14 @@ use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\SearchFilter;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\CustomerRepository")
+ * //Permet de configurer les customer au niveau de l'API en limittant la visibilité des champs par des groupes et en limittant les méthodes dispo
  * @ApiResource(
  *  normalizationContext={"groups": {"customers_read"}},
  *  collectionOperations={"GET", "POST"},
  *  itemOperations={"GET", "PUT", "DELETE", "PATCH"},
  *  subresourceOperations={"invoices_get_subresource"={"path"="/customers/{id}/invoices"}}
  * )
+ * //On permet le filtrage et la recherche via l'API par les utilisateurs 
  * @ApiFilter(SearchFilter::class)
  * @ApiFilter(OrderFilter::class)
  */
