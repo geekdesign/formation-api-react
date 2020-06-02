@@ -23,7 +23,7 @@ use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\SearchFilter;
  * @ApiResource(
  *  subresourceOperations={"api_customers_invoices_get_subresource"={"normalization_context"={"groups"={"invoices_subresource"}}}},
  *  attributes={
- *      "pagination_enabled"=true,
+ *      "pagination_enabled"=false,
  *      "pagination_items_per_page"= 20,
  *      "order": {"sentAt":"desc"}
  *  },
