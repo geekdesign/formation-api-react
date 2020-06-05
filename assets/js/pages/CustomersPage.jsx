@@ -65,7 +65,6 @@ const CustomersPage = (props) => {
 	return (
 		<>
 			<h1>Liste des clients</h1>
-
 			<div className="form-group">
 				<input
 					type="text"
@@ -75,7 +74,6 @@ const CustomersPage = (props) => {
 					placeholder="Rechercher ..."
 				/>
 			</div>
-
 			<table className="table table-hover">
 				<thead>
 					<tr>
@@ -124,7 +122,7 @@ const CustomersPage = (props) => {
 				<Pagination
 					currentPage={currentPage}
 					itemsPerPage={itemsPerPage}
-					length={filteredCustomers.length}
+					length={customers.length}
 					onPageChange={handelChangePage}
 				/>
 			)}

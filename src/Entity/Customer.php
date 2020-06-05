@@ -3,29 +3,31 @@
 namespace App\Entity;
 
 
-use App\Entity\User;
-use App\Entity\Invoice;
-use Doctrine\ORM\Mapping as ORM;
 use ApiPlatform\Core\Annotation\ApiFilter;
-use Doctrine\Common\Collections\Collection;
 use ApiPlatform\Core\Annotation\ApiResource;
 use ApiPlatform\Core\Annotation\ApiSubresource;
-use Doctrine\Common\Collections\ArrayCollection;
-use Symfony\Component\Serializer\Annotation\Groups;
-use Symfony\Component\Validator\Constraints as Assert;
 use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\OrderFilter;
 use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\SearchFilter;
+use App\Entity\Invoice;
+use App\Entity\User;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
+use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Annotation\Groups;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\CustomerRepository")
- * //Permet de configurer les customer au niveau de l'API en limittant la visibilité des champs par des groupes et en limittant les méthodes dispo
  * @ApiResource(
- *  normalizationContext={"groups": {"customers_read"}},
  *  collectionOperations={"GET", "POST"},
- *  itemOperations={"GET", "PUT", "DELETE", "PATCH"},
- *  subresourceOperations={"invoices_get_subresource"={"path"="/customers/{id}/invoices"}}
+ *  itemOperations={"GET", "PUT", "DELETE"},
+ *  subresourceOperations={
+ *      "invoices_get_subresource"={"path"="/customers/{id}/invoices"}
+ *  },
+ *  normalizationContext={
+ *      "groups"={"customers_read"}
+ *  }
  * )
- * //On permet le filtrage et la recherche via l'API par les utilisateurs 
  * @ApiFilter(SearchFilter::class)
  * @ApiFilter(OrderFilter::class)
  */

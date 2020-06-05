@@ -2,16 +2,16 @@
 
 namespace App\Entity;
 
-use App\Entity\User;
-use App\Entity\Customer;
-use Doctrine\ORM\Mapping as ORM;
-use App\Repository\InvoiceRepository;
 use ApiPlatform\Core\Annotation\ApiFilter;
 use ApiPlatform\Core\Annotation\ApiResource;
-use Symfony\Component\Serializer\Annotation\Groups;
-use Symfony\Component\Validator\Constraints as Assert;
 use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\OrderFilter;
 use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\SearchFilter;
+use App\Entity\Customer;
+use App\Entity\User;
+use App\Repository\InvoiceRepository;
+use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Annotation\Groups;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass=InvoiceRepository::class)
@@ -34,6 +34,16 @@ use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\SearchFilter;
  *      "disable_type_enforcement"=true
  *  }
  * )
+ * itemOperations={"GET", "PUT", "DELETE", "increment"={
+ *       "method"="post", 
+ *       "path"="/invoices/{id}/increment", 
+ *       "controller"="App\Controller\InvoiceIncrementationController", 
+ *       "swagger_context"={
+ *          "summary"="Incrémente une facture",
+ *          "description"="Incrémente le chrono d'une facture donnée"
+ *       }
+ *     }
+ *  },
  * //Ci-dessous 
  *   Je rend disponible la recherche par l'utilisateur dans l'API pour cette entité 
  * //
@@ -41,7 +51,7 @@ use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\SearchFilter;
   * //Ci-dessous 
  *   Je rend disponible le tri par l'utilisateur de l'API pour cette entité
  * //
- * @ApiFilter(OrderFilter::class)
+ *  @ApiFilter(OrderFilter::class, properties={"amount","sentAt"})
  */
 class Invoice
 {
