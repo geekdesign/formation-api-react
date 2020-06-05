@@ -1,14 +1,14 @@
 import React, { useEffect, useState } from "react";
 import Pagination from "../components/Pagination";
-import CustomersApi from "../services/customersAPI";
+import CustomersAPI from "../services/customersAPI";
 
 const CustomersPage = (props) => {
 	const [customers, setCustomers] = useState([]);
 	const [currentPage, setCurrentPage] = useState(1);
 	const [search, setSearch] = useState("");
 
-	//Permet d'aller récupérer les customers
-	const fetchCustomer = async () => {
+	// Permet d'aller récupérer les customers
+	const fetchCustomers = async () => {
 		try {
 			const data = await CustomersAPI.findAll();
 			setCustomers(data);
@@ -17,36 +17,35 @@ const CustomersPage = (props) => {
 		}
 	};
 
-	// Au chargement du composant on va chercher les customers
+	// Au chargement du composant, on va chercher les customers
 	useEffect(() => {
-		fetchCustomer();
+		fetchCustomers();
 	}, []);
 
-	// Permet de supprimer un customers
+	// Gestion de la suppression d'un customer
 	const handleDelete = async (id) => {
 		const originalCustomers = [...customers];
 		setCustomers(customers.filter((customer) => customer.id !== id));
+
 		try {
-			await CustomersApi.delete(id);
+			await CustomersAPI.delete(id);
 		} catch (error) {
 			setCustomers(originalCustomers);
-			console.log(error.response);
 		}
 	};
 
-	// Permet de redéfinir le setCurrentpage lors du changement de page
-	const handelChangePage = (page) => setCurrentPage(page);
+	// Gestion du changement de page
+	const handlePageChange = (page) => setCurrentPage(page);
 
-	// Permet de setter la value de search
-	const handelSearch = ({ currentTarget }) => {
+	// Gestion de la recherche
+	const handleSearch = ({ currentTarget }) => {
 		setSearch(currentTarget.value);
 		setCurrentPage(1);
 	};
 
-	// Items par page
 	const itemsPerPage = 7;
 
-	// Fonction de filtrage
+	// Filtrage des customers en fonction de la recherche
 	const filteredCustomers = customers.filter(
 		(c) =>
 			c.firstName.toLowerCase().includes(search.toLowerCase()) ||
@@ -55,7 +54,7 @@ const CustomersPage = (props) => {
 			(c.company && c.company.toLowerCase().includes(search.toLowerCase()))
 	);
 
-	// Définit la pagination en fonction du filtre
+	// Pagination des données
 	const paginatedCustomers = Pagination.getData(
 		filteredCustomers,
 		currentPage,
@@ -65,65 +64,69 @@ const CustomersPage = (props) => {
 	return (
 		<>
 			<h1>Liste des clients</h1>
+
 			<div className="form-group">
 				<input
 					type="text"
-					onChange={handelSearch}
+					onChange={handleSearch}
 					value={search}
 					className="form-control"
 					placeholder="Rechercher ..."
 				/>
 			</div>
+
 			<table className="table table-hover">
 				<thead>
 					<tr>
-						<th className="text-center">Id</th>
+						<th>Id.</th>
 						<th>Client</th>
 						<th>Email</th>
 						<th>Entreprise</th>
 						<th className="text-center">Factures</th>
 						<th className="text-center">Montant total</th>
-						<th></th>
+						<th />
 					</tr>
 				</thead>
+
 				<tbody>
 					{paginatedCustomers.map((customer) => (
 						<tr key={customer.id}>
-							<td className="text-center">{customer.id}</td>
+							<td>{customer.id}</td>
 							<td>
 								<a href="#">
 									{customer.firstName} {customer.lastName}
 								</a>
 							</td>
 							<td>{customer.email}</td>
-							<td>{customer.compagny}</td>
+							<td>{customer.company}</td>
 							<td className="text-center">
 								<span className="badge badge-primary">
 									{customer.invoices.length}
 								</span>
 							</td>
 							<td className="text-center">
-								{customer.totalAmount.toLocaleString()} CHF
+								{customer.totalAmount.toLocaleString()} €
 							</td>
 							<td>
-								<buton
+								<button
 									onClick={() => handleDelete(customer.id)}
 									disabled={customer.invoices.length > 0}
 									className="btn btn-sm btn-danger"
 								>
-									X Supprimer
-								</buton>
+									Supprimer
+								</button>
 							</td>
 						</tr>
 					))}
 				</tbody>
 			</table>
+
 			{itemsPerPage < filteredCustomers.length && (
 				<Pagination
 					currentPage={currentPage}
 					itemsPerPage={itemsPerPage}
-					length={customers.length}
-					onPageChange={handelChangePage}
+					length={filteredCustomers.length}
+					onPageChanged={handlePageChange}
 				/>
 			)}
 		</>

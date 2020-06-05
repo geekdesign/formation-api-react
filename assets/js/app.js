@@ -1,4 +1,4 @@
-import React, { useState, useContext } from "react";
+import React, { useState } from "react";
 import ReactDOM from "react-dom";
 import { HashRouter, Switch, Route, withRouter } from "react-router-dom";
 import Navbar from "./components/Navbar";

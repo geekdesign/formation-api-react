@@ -44,7 +44,7 @@ const InvoicesPage = (props) => {
 		setInvoices(invoices.filter((invoice) => invoice.id !== id));
 
 		try {
-			await InvoicesAPI.delete(id);
+			await invoicesAPI.delete(id);
 			toast.success("La facture a bien été supprimée");
 		} catch (error) {
 			toast.error("Une erreur est survenue");
@@ -56,10 +56,10 @@ const InvoicesPage = (props) => {
 	const itemsPerPage = 7;
 
 	// Permet de redéfinir le setCurrentpage lors du changement de page
-	const handelChangePage = (page) => setCurrentPage(page);
+	const handleChangePage = (page) => setCurrentPage(page);
 
 	// Permet de setter la value de search
-	const handelSearch = ({ currentTarget }) => {
+	const handleSearch = ({ currentTarget }) => {
 		setSearch(currentTarget.value);
 		setCurrentPage(1);
 	};
@@ -86,7 +86,7 @@ const InvoicesPage = (props) => {
 			<div className="form-group">
 				<input
 					type="text"
-					onChange={handelSearch}
+					onChange={handleSearch}
 					value={search}
 					className="form-control"
 					placeholder="Rechercher ..."
@@ -141,7 +141,7 @@ const InvoicesPage = (props) => {
 					currentPage={currentPage}
 					itemsPerPage={itemsPerPage}
 					length={invoices.length}
-					onPageChange={handelChangePage}
+					onPageChanged={handleChangePage}
 				/>
 			)}
 		</>
