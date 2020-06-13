@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import Pagination from "../components/Pagination";
 import CustomersAPI from "../services/customersAPI";
+import { Link } from "react-router-dom";
 
 const CustomersPage = (props) => {
 	const [customers, setCustomers] = useState([]);
@@ -63,7 +64,12 @@ const CustomersPage = (props) => {
 
 	return (
 		<>
-			<h1>Liste des clients</h1>
+			<div className="d-flex justify-content-between align-items-center mb-4">
+				<h1>Liste des clients</h1>
+				<Link to="/customers/new" className="btn btn-primary mr-5">
+					Créer un client
+				</Link>
+			</div>
 
 			<div className="form-group">
 				<input
@@ -108,6 +114,12 @@ const CustomersPage = (props) => {
 								{customer.totalAmount.toLocaleString()} €
 							</td>
 							<td>
+								<Link
+									to="/customers/{customer.id}"
+									className="btn btn-sm btn-success mr-3"
+								>
+									Editer
+								</Link>
 								<button
 									onClick={() => handleDelete(customer.id)}
 									disabled={customer.invoices.length > 0}

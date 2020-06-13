@@ -1,6 +1,7 @@
 import React, { useState, useContext } from "react";
 import AuthAPI from "../services/authAPI";
 import AuthContext from "../contexts/AuthContext";
+import Field from "../components/forms/Field";
 
 const LoginPage = ({ onLogin, history }) => {
 	const { isAuthenticated, setIsAuthenticated } = useContext(AuthContext);
@@ -29,7 +30,7 @@ const LoginPage = ({ onLogin, history }) => {
 			history.replace("/customers");
 		} catch (error) {
 			setError(
-				"Aucun compte sne possède cette adresse ou alors les infromations entrées sont éronée ! "
+				"Aucun compte ne possède cette adresse ou alors les infromations entrées sont éronée ! "
 			);
 		}
 	};
@@ -39,31 +40,23 @@ const LoginPage = ({ onLogin, history }) => {
 			<h1>Login Form</h1>
 
 			<form onSubmit={handleSubmit}>
-				<div className="form-group">
-					<label htmlFor="username">Adresse email</label>
-					<input
-						value={credentials.username}
-						onChange={handleChange}
-						type="email"
-						placeholder="Adresse email de connexion"
-						id="username"
-						name="username"
-						className={"form-control" + (error && " is-invalid")}
-					/>
-					{error && <p className="invalid-feedback">{error}</p>}
-				</div>
-				<div className="form-group">
-					<label htmlFor="password">Mot de passe</label>
-					<input
-						value={credentials.password}
-						onChange={handleChange}
-						type="password"
-						placeholder="Mot de passe"
-						id="password"
-						name="password"
-						className="form-control"
-					/>
-				</div>
+				<Field
+					label="Adresse email"
+					name="username"
+					value={credentials.username}
+					onChange={handleChange}
+					placeholder="Adresse email de connexion"
+					type="email"
+					error={error}
+				/>
+
+				<Field
+					label="Mot de passe"
+					name="password"
+					value={credentials.password}
+					onChange={handleChange}
+					type="password"
+				/>
 				<div className="form-group">
 					<button type="submit" className="btn btn-success">
 						Je me connecte
