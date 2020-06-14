@@ -41,7 +41,7 @@ const RegisterPage = ({ history }) => {
 		}
 
 		try {
-			await UsersAPI.register;
+			await UsersAPI.register(user);
 			toast.success("Super! Votre inscription a bien fonctionnée. 😁 ");
 			setErrors({});
 			history.replace("/login");
