@@ -3,19 +3,18 @@ import React from "react";
 const HomePage = (props) => {
 	return (
 		<div className="jumbotron">
-			<h1 className="display-3">Hello, world!</h1>
+			<h1 className="display-4">Bienvenue sur SYMREACT</h1>
 			<p className="lead">
-				This is a simple hero unit, a simple jumbotron-style component for
-				calling extra attention to featured content or information.
+				Une application de suivi de factures. Tu peux y créer des clients et leurs assigner des factures, trop cool non?
+				De plus tu peux voir le montant total de facture encore ouvertes pour un client. <br></br> Ce site fonctionne avec Symfony 5 - ApiPlatform et React
 			</p>
 			<hr className="my-4" />
 			<p>
-				It uses utility classes for typography and spacing to space content out
-				within the larger container.
+				Le contenu de ce site a été réalisé en suivant la superbe formation de Lior Chamla "Développement moderne avec Symfony 4, ApiPlatform et React !"
 			</p>
 			<p className="lead">
-				<a className="btn btn-primary btn-lg" href="#" role="button">
-					Learn more
+				<a className="btn btn-primary btn-lg" href="https://learn.web-develop.me/" target="_blank" role="button">
+					Voir toutes les formations de Lior Chamla
 				</a>
 			</p>
 		</div>
